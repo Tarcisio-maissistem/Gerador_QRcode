@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Gerador de QRCODE</title>
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+      @media print {
+        #printableArea {
+          margin: 0;
+          padding: 0;
+          border: 0;
+          font-size: 14px;
+        }
+        #printableArea ~ * {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1 class="display-4 text-center">Gerador de QR Code</h1>
+        <hr class="my-4" />
+        <p>Cole sua URL aqui</p>
+        <input
+          class="form-control"
+          id="conteudoQRCode"
+          required="true"
+          maxlength="500"
+          type="text"
+          placeholder="Ex: www.renovafood.com.br"
+        />
+        <br />
+        <button
+          type="button"
+          class="btn btn-primary generate-qr-code"
+          onclick="geraQRCode()"
+          data-element="#minhaDiv"
+        >
+          Gerar QR Code
+        </button>
+      </div>
+    </div>
+    <div class="container">
+      <div
+        id="printableArea"
+        style="display: none"
+        class="form-group text-center"
+      >
+        <img id="imageQRCode" class="printable" />
+        <div>
+          <button type="button" class="btn btn-primary" onclick="print()">
+            Imprimir
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function geraQRCode() {
+        if (document.getElementById("conteudoQRCode").value == "") {
+          swal("Por favor, preencha o campo URL", "", "error");
+          document.getElementById("conteudoQRCode").focus();
+          return false;
+        } else {
+          var conteudo = document.getElementById("conteudoQRCode").value;
+          var GoogleCharts =
+            "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=";
+          var imagemQRCode = GoogleCharts + conteudo;
+          document.getElementById("imageQRCode").src = imagemQRCode;
+          swal("QR-Code Gerado com Sucesso!", "", "success");
+          console.log(conteudo);
+
+          if (document.getElementById("printableArea").style.display == "none") {
+            document.getElementById("printableArea").style.display = "block";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
